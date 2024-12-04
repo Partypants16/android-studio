@@ -1,6 +1,7 @@
 package edu.monash.edittextsexample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         switchIsActive = findViewById(R.id.switchIsActive);
 
         sharedPreferences = getSharedPreferences(KeyStore.FILE_NAME, MODE_PRIVATE);
+
+        ActivityCompat.requestPermissions(this, new String[]{
+                android.Manifest.permission.SEND_SMS,
+                android.Manifest.permission.RECEIVE_SMS,
+                android.Manifest.permission.READ_SMS
+        }, 0);
     }
 
 

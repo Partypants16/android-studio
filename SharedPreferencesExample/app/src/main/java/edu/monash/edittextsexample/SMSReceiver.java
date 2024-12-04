@@ -3,13 +3,20 @@ package edu.monash.edittextsexample;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Telephony;
+import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 public class SMSReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        throw new UnsupportedOperationException("Not yet implemented");
+        SmsMessage[] messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+        for (int i = 0; i < messages.length; i++) {
+            SmsMessage currentMessage = messages[i];
+            String senderNum = currentMessage.getDisplayOriginatingAddress();
+            String message = currentMessage.getDisplayMessageBody();
+            Toast.makeText(context,"Sender: "+ senderNum + ", message: " + message, Toast.LENGTH_LONG).show();
+        }
     }
 }
