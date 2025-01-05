@@ -3,12 +3,18 @@ package edu.monash.edittextsexample;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
@@ -36,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
                 android.Manifest.permission.RECEIVE_SMS,
                 android.Manifest.permission.READ_SMS
         }, 0);
+
+        MyBroadCastReceiver myBroadCastReceiver = new MyBroadCastReceiver();
+        /*
+         * Register the broadcast handler with the intent filter that is declared in
+         * class SMSReceiver @line 11
+         * */
+        registerReceiver(myBroadCastReceiver, new IntentFilter(SMSReceiver.SMS_FILTER), RECEIVER_EXPORTED);
+
     }
 
 
@@ -87,5 +101,37 @@ public class MainActivity extends AppCompatActivity {
         etStudentName.setText(studentNameRestored);
         etStudentId.setText(String.valueOf(studentIdRestored));
         switchIsActive.setChecked(isActiveRestored);
+    }
+
+    class MyBroadCastReceiver extends BroadcastReceiver {
+        /*
+         * This method 'onReceive' will get executed every time class SMSReceive sends a broadcast
+         * */
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            /*
+             * Retrieve the message from the intent
+             * */
+            String msg = intent.getStringExtra(SMSReceiver.SMS_MSG_KEY);
+            myStringTokennizer(msg);
+// Tokenize received message here
+        }
+
+
+
+        public void myStringTokennizer(String msg){
+            /*
+             * String Tokenizer is used to parse the incoming message
+             * The protocol is to have the account holder name and account number separate by a semicolon
+             * */
+            StringTokenizer sT = new StringTokenizer(msg, ";");
+            String studentName = sT.nextToken();
+            String studentId = sT.nextToken();
+            String studentIsActive = sT.nextToken();
+
+            etStudentName.setText(studentName);
+            etStudentId.setText(String.valueOf(studentId));
+            switchIsActive.setChecked(studentIsActive.equals("TRUE"));
+        }
     }
 }
