@@ -1,5 +1,6 @@
 package edu.monash.optionsmenu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -10,6 +11,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -56,6 +59,31 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // match the id of selected item and do something
+        if (item.getItemId() == R.id.option_add_student) {
+// if Add Student option is selected, add student to
+// the Shared Pref using the method we defined previously
+            onSaveButtonClick(null);
+        } else if (item.getItemId() == R.id.option_restore_student) {
+// if Restore Student option is selected
+            onRestoreButtonClick(null);
+        } else if (item.getItemId() == R.id.option_clear_student) {
+// if method not found, create a new one to clear all the fields
+            clearFields();
+        }
+        return true;
+    }
+
+    private void clearFields() {
+    }
 
     /**
      * Public method is requirement to Layout can access this method

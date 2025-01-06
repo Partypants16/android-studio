@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/option_add_student"
+        android:title="Add Student" />
+    <item
+        android:id="@+id/option_restore_student"
+        android:title="Restore Student" />
+    <item
+        android:id="@+id/option_clear_student"
+        android:title="Clear Student" />
+</menu>
