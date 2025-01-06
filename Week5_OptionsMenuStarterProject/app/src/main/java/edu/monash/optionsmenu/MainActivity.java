@@ -1,6 +1,7 @@
 package edu.monash.optionsmenu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.content.BroadcastReceiver;
@@ -26,7 +27,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.app_bar_layout);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(myToolbar);
 
         // get reference to the UI elements
         // findViewById method looks for elements by the Id we set on elements
